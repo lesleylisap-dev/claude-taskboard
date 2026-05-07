@@ -1,3 +1,3 @@
-# Claude 任务板
+# Claude Taskboard
 
-管理 Claude Code 对话，按任务组织 sessions，支持归档和快速续接。
+A VS Code sidebar extension for managing Claude Code conversations. Organize sessions by task, with support for archiving and quick resumption.
