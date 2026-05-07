@@ -1,0 +1,5 @@
+node_modules/
+out/
+*.vsix
+\[Content_Types\].xml
+extension.vsixmanifest

@@ -1,0 +1,67 @@
+{
+  "name": "claude-taskboard",
+  "displayName": "Claude 任务板",
+  "description": "管理 Claude Code 对话，按任务组织 sessions，支持归档和快速续接",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "claudeTaskboard",
+          "title": "Claude 任务板",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "claudeTaskboard": [
+        {
+          "type": "webview",
+          "id": "claudeTaskboard.taskBoard",
+          "name": "任务板"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "claudeTaskboard.refresh",
+        "title": "刷新任务板",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "claudeTaskboard.refresh",
+          "when": "view == claudeTaskboard.taskBoard",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --minify",
+    "watch": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --watch",
+    "compile": "tsc --noEmit",
+    "package": "vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.0.0",
+    "esbuild": "^0.20.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "claude-taskboard": "file:"
+  }
+}
