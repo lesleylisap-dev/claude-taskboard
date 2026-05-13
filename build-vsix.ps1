@@ -2,6 +2,49 @@ $ErrorActionPreference = "Stop"
 $root = "C:\Users\I327394\projects\claude-taskboard"
 $vsix = "$root\claude-taskboard-0.1.0.vsix"
 
+# Auto-generate manifest files if missing (gitignored, regenerated each build)
+$manifest = "$root\extension.vsixmanifest"
+if (-not (Test-Path $manifest)) {
+    Set-Content $manifest @'
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Language="en-US" Id="claude-taskboard" Version="0.1.0" Publisher="lesleylisap-dev" />
+    <DisplayName>Claude 任务板</DisplayName>
+    <Description xml:space="preserve">管理 Claude Code 对话，按任务组织 sessions，支持归档和快速续接</Description>
+    <Tags>claude,taskboard</Tags>
+    <Categories>Other</Categories>
+    <GalleryFlags>Public</GalleryFlags>
+    <Properties>
+      <Property Id="Microsoft.VisualStudio.Code.Engine" Value="^1.85.0" />
+    </Properties>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Code"/>
+  </Installation>
+  <Dependencies/>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.Code.Manifest" Path="extension/package.json" Addressable="true" />
+  </Assets>
+</PackageManifest>
+'@
+}
+$contentTypes = "$root\[Content_Types].xml"
+if (-not (Test-Path $contentTypes)) {
+    Set-Content $contentTypes @'
+<?xml version="1.0" encoding="utf-8"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+  <Default Extension=".vsixmanifest" ContentType="text/xml" />
+  <Default Extension=".json" ContentType="application/json" />
+  <Default Extension=".js" ContentType="application/javascript" />
+  <Default Extension=".css" ContentType="text/css" />
+  <Default Extension=".svg" ContentType="image/svg+xml" />
+  <Default Extension=".md" ContentType="text/markdown" />
+  <Default Extension=".png" ContentType="image/png" />
+</Types>
+'@
+}
+
 # Build the extension directory structure inside a temp folder
 $tmp = "$env:TEMP\vsix-build-$(Get-Random)"
 $extDir = "$tmp\extension"
