@@ -11,7 +11,7 @@ const COLORS = [
 let state = { board: { tasks: [] }, unassigned: [], sessionMap: {} };
 let selectedColor = COLORS[0];
 let archivedOpen = false;
-let unassignedOpen = true;
+let unassignedOpen = false;
 let searchQuery = '';
 let draggedSessionId = null;
 

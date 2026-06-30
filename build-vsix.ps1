@@ -30,8 +30,8 @@ if (-not (Test-Path $manifest)) {
 '@
 }
 $contentTypes = "$root\[Content_Types].xml"
-if (-not (Test-Path $contentTypes)) {
-    Set-Content $contentTypes @'
+if (-not (Test-Path -LiteralPath $contentTypes)) {
+    Set-Content -LiteralPath $contentTypes @'
 <?xml version="1.0" encoding="utf-8"?>
 <Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
   <Default Extension=".vsixmanifest" ContentType="text/xml" />
@@ -67,7 +67,7 @@ Copy-Item "$root\media\icon.svg"         "$extDir\media\icon.svg"
 
 # Copy manifest files to root of zip
 Copy-Item "$root\extension.vsixmanifest" "$tmp\extension.vsixmanifest"
-Copy-Item "$root\[Content_Types].xml"    "$tmp\[Content_Types].xml"
+Copy-Item -LiteralPath "$root\[Content_Types].xml" "$tmp\[Content_Types].xml"
 
 # Zip everything
 if (Test-Path $vsix) { Remove-Item $vsix }
